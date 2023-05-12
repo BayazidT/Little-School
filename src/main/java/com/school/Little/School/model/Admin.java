@@ -1,5 +1,6 @@
 package com.school.Little.School.model;
 
+import com.school.Little.School.user.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,6 +20,9 @@ public class Admin {
     private String email;
     private String phone;
     private String password;
+    private String tata;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public void setId(Long id) {
         this.id = id;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
+    private final TeacherAuthenticationService serviceTeacher;
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
@@ -23,7 +24,14 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody AuthenticationRequest request
     ){
-        //
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @PostMapping("/authenticate-teacher")
+    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){
+        return ResponseEntity.ok(serviceTeacher.authenticate(request));
+    }
+    public String testing(){
+        return "Hello";
     }
 }

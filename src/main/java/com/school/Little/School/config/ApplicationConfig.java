@@ -1,5 +1,8 @@
 package com.school.Little.School.config;
 
+import com.school.Little.School.model.Teacher;
+import com.school.Little.School.repository.TeacherRepository;
+import com.school.Little.School.user.User;
 import com.school.Little.School.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,11 +21,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        return username -> userRepository.findByEmail(username)
+//                .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+//    }
+private final UserRepository userRepository;
+    private final TeacherRepository teacherRepository;
+
     @Bean
-    public UserDetailsService userDetailsService(){
-        return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+    public UserDetailsService userDetailsService() {
+        return username -> {
+            User user = userRepository.findByEmail(username).orElse(null);
+            if (user != null) {
+                return user;
+            } else {
+                Teacher teacher = teacherRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                return teacher;
+            }
+        };
     }
 
     @Bean

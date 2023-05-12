@@ -1,10 +1,12 @@
 package com.school.Little.School.auth;
 
 import com.school.Little.School.config.JwtService;
+import com.school.Little.School.repository.TeacherRepository;
 import com.school.Little.School.user.Role;
 import com.school.Little.School.user.User;
 import com.school.Little.School.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
+
     private final UserRepository repository;
+
+    private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
