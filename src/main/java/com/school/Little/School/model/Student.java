@@ -1,6 +1,6 @@
 package com.school.Little.School.model;
 
-import com.school.Little.School.user.Role;
+import com.school.Little.School.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,8 +21,9 @@ public class Student {
     private String email;
     private String phone;
     private String department_name;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "advisor_id")
     private Teacher advisor;
