@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -26,11 +27,22 @@ public class TeacherController {
         return teacherRepository.save(teacher);
     }
 
-    @GetMapping("teacher/{id}")
+    @GetMapping("/teacher/{id}")
     public ResponseEntity<Teacher> getTeacherById(@PathVariable long id){
         Teacher teacher = teacherRepository.findById(id)
                 .orElseThrow(()->new ResourceNotFoundException("No teacher with the given Id:" + id));
         return ResponseEntity.ok(teacher);
     }
+    @DeleteMapping("/delete-teacher/{id}")
+    public ResponseEntity<String> deleteTeacherById(@PathVariable long id) {
+        Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
+        if (optionalTeacher.isEmpty()) {
+            throw new ResourceNotFoundException("No teacher with the given Id: " + id);
+        }
+
+        teacherRepository.delete(optionalTeacher.get());
+        return ResponseEntity.ok("Teacher with ID " + id + " has been deleted successfully.");
+    }
+
 
 }
