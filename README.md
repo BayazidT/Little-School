@@ -39,8 +39,12 @@ To Run the application
 #### Register endpoint
 * `POST /api/v1/register` - Register as an user
 * `POST /api/v1/auth/authenticate` - Login a user
+* `POST /api/v1/insert-student` - Insert a new student
 * `GET /api/v1/student-list` - Get student lists
+* `POST /api/v1/insert-teacher` - Insert a new teacher
 * `GET /api/v1/teacher-list` - Get teacher lists
+* `GET /api/v1/teacher/{id}` - Get teacher specific teacher
+* 
 
 
 
