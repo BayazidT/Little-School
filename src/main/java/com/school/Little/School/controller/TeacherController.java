@@ -1,6 +1,7 @@
 package com.school.Little.School.controller;
 
 import com.school.Little.School.exception.ResourceNotFoundException;
+import com.school.Little.School.model.Student;
 import com.school.Little.School.model.Teacher;
 import com.school.Little.School.repository.TeacherRepository;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,23 @@ public class TeacherController {
         teacherRepository.delete(optionalTeacher.get());
         return ResponseEntity.ok("Teacher with ID " + id + " has been deleted successfully.");
     }
+    @PutMapping("/update-teacher/{id}")
+    public ResponseEntity<Teacher> updateStudent(@PathVariable long id, @RequestBody Teacher updatedTeacher) {
+        Teacher teacher = teacherRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No teacher with the given Id: " + id));
+
+        // Update the student attributes
+        teacher.setName(updatedTeacher.getName());
+        teacher.setEmail(updatedTeacher.getEmail());
+        teacher.setPhone(updatedTeacher.getPhone());
+        teacher.setDepartment_name(updatedTeacher.getDepartment_name());
+        teacher.setUser(updatedTeacher.getUser());
+
+        Teacher newStudent =   teacherRepository.save(teacher);
+
+        return ResponseEntity.ok(newStudent);
+    }
+
 
 
 }
